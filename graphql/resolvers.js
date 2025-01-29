@@ -7,13 +7,11 @@ export const resolvers = {
       return await User.find(); 
     },
     getUser: async (_, { id }) => {
-      const user = await User.findById(id);
-      const posts = await Post.find({ author: id });
-      user.posts = posts;
+      const user = await User.findById(id).populate("posts");
       return user;
     },
     getPosts: async () => {
-      return await Post.find().populate("author"); 
+      return await Post.find().populate("authorId"); 
     },
     getPost: async (_, { id }) => {
       return await Post.findById(id).populate("author");
@@ -24,10 +22,9 @@ export const resolvers = {
       const newUser = new User({ name, email, password });
       return await newUser.save(); 
     },
-    addPost: async (_, { title, content, author }) => {
-      const newPost = new Post({ title, content, author });
+    addPost: async (_, { title, content, authorId }) => {
+      const newPost = new Post({ title, content, authorId });
       await newPost.save();
-      newPost.author = newPost.author.toString();
       return newPost;
     },
     updateUser: async (_, { id, name, email, password }) => {

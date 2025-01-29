@@ -4,9 +4,14 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true }, 
   },
   { timestamps: true }
 );
+UserSchema.virtual('posts', {
+  ref: 'Post',       
+  localField: '_id', 
+  foreignField: 'authorId' 
+});
 
 export const User = mongoose.model("User", UserSchema);

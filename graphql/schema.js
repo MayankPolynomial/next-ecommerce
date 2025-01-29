@@ -13,7 +13,7 @@ export const typeDefs =  gql`
     _id: ID!
     title: String!
     content: String!
-    author: User! 
+    authorId: User
   }
 
   type Query {
@@ -29,7 +29,7 @@ export const typeDefs =  gql`
 
   type Mutation {
     addUser(name: String!, email: String!, password: String!): User
-    addPost(title: String!, content: String!, author: ID!): Post
+    addPost(title: String!, content: String!, authorId: ID!): Post
     updateUser(id: ID!, name: String, email: String, password: String): User
     updatePost(id: ID!, title: String, content: String): Post
     deleteUser(id: ID!): Message
